@@ -1,0 +1,40 @@
+set clienv on-failure continue
+set bgp external remote-as 65515 peer 172.18.0.12 off
+set bgp external remote-as 65515 peer 172.18.0.13 off
+set bgp external remote-as 65515 off
+set routemap im_azure id 10 off
+set routemap ex_azure id 10 off
+delete vpn tunnel 100
+delete vpn tunnel 101
+set clienv on-failure stop
+add vpn tunnel 100 type numbered local 169.254.254.2 remote 172.18.0.12 peer Azure-instance0
+set interface vpnt100 comments Azure-instance0
+set interface vpnt100 state on
+set interface vpnt100 mtu 1500
+add vpn tunnel 101 type numbered local 169.254.254.2 remote 172.18.0.13 peer Azure-instance1
+set interface vpnt101 comments Azure-instance1
+set interface vpnt101 state on
+set interface vpnt101 mtu 1500
+set as 65500
+set router-id 
+set bgp ecmp on
+set bgp external remote-as 65515 on
+set bgp external remote-as 65515 peer 172.18.0.12 on
+set bgp external remote-as 65515 peer 172.18.0.12 graceful-restart on
+set bgp external remote-as 65515 peer 172.18.0.12 ip-reachability-detection on
+set bgp external remote-as 65515 peer 172.18.0.12 ip-reachability-detection check-control-plane-failure on
+set bgp external remote-as 65515 peer 172.18.0.13 on
+set bgp external remote-as 65515 peer 172.18.0.13 graceful-restart on
+set bgp external remote-as 65515 peer 172.18.0.13 ip-reachability-detection on
+set bgp external remote-as 65515 peer 172.18.0.13 ip-reachability-detection check-control-plane-failure on
+set routemap im_azure id 10 on
+set routemap im_azure id 10 allow
+set bgp external remote-as 65515 peer 172.18.0.12 import-routemap im_azure preference 1 on
+set bgp external remote-as 65515 peer 172.18.0.13 import-routemap im_azure preference 1 on
+set routemap ex_azure id 10 on
+set routemap ex_azure id 10 allow
+set routemap ex_azure id 10 match protocol direct
+set routemap ex_azure id 10 match interface eth1 on
+set routemap ex_azure id 10 match interface eth2.2 on
+set bgp external remote-as 65515 peer 172.18.0.12 export-routemap ex_azure preference 1 on
+set bgp external remote-as 65515 peer 172.18.0.13 export-routemap ex_azure preference 1 on
