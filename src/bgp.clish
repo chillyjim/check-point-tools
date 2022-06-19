@@ -11,12 +11,12 @@ add vpn tunnel 100 type numbered local 169.254.254.2 remote 172.18.0.12 peer Azu
 set interface vpnt100 comments Azure-instance0
 set interface vpnt100 state on
 set interface vpnt100 mtu 1500
-add vpn tunnel 101 type numbered local 169.254.254.2 remote 172.18.0.13 peer Azure-instance1
+add vpn tunnel 101 type numbered local 169.254.254.5 remote 172.18.0.13 peer Azure-instance1
 set interface vpnt101 comments Azure-instance1
 set interface vpnt101 state on
 set interface vpnt101 mtu 1500
 set as 65500
-set router-id 
+set router-id 169.254.254.1
 set bgp ecmp on
 set bgp external remote-as 65515 on
 set bgp external remote-as 65515 peer 172.18.0.12 on

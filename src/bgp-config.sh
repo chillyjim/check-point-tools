@@ -13,7 +13,7 @@ P2="20.85.26.91" #VPN Peer
 B2="172.18.0.13" #BGP Peer
 P2NAME="Azure-instance1" #Interoprobal Device Object Name 
 MYIP="169.254.254.2" #VPN Tunnel interface IP address
-BGPIP="169.254.254.2" #My BGP Router-ID, usualy the cluster VIP
+BGPIP="169.254.254.1" #My BGP Router-ID, usualy the cluster VIP
 MYASN="65500" #My AS Number
 AZASN="65515" #Azure's ASN
 
